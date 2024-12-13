@@ -15,6 +15,7 @@ function App() {
     <>
       <Router>
         <Routes>
+          {/* Navbar is parent Component and inside we have outlet to accept all child components */}
           <Route element={<Navbar />} >
             <Route path='/' element={<Home />} />
             <Route path='/mealdb' element={<Mealdb />} />
