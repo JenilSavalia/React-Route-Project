@@ -7,6 +7,7 @@ import Harrypotter from './Components/Harrypotter/Harrypotter'
 import Bankdb from './Components/Bankdb/Bankdb'
 import Navbar from './Components/Navbar'
 import Home from './Components/Home'
+import CategoryPage from './Components/Mealbd/CategoryPage';
 
 function App() {
 
@@ -18,12 +19,15 @@ function App() {
           {/* Navbar is parent Component and inside we have outlet to accept all child components */}
           <Route element={<Navbar />} >
             <Route path='/' element={<Home />} />
-            <Route path='/mealdb' element={<Mealdb />} />
+            <Route path='/mealdb'  >
+              <Route index element={<Mealdb />} />
+              <Route path=':category' element={<CategoryPage />} />
+            </Route>
+
             <Route path='/cocktaildb' element={<Cocktaildb />} />
             <Route path='/harrypotterdb' element={<Harrypotter />} />
             <Route path='/bankdb' element={<Bankdb />} />
           </Route>
-
         </Routes>
       </Router>
     </>

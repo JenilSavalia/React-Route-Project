@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link, Outlet, useParams } from "react-router-dom";
+
 
 const MealdbHome = () => {
 
@@ -32,7 +34,7 @@ const MealdbHome = () => {
         fetch_Mealdb();
         setTimeout(() => {
             Setloading(false)
-        }, 1000);
+        }, 2000);
     }, [])
 
 
@@ -62,25 +64,21 @@ const MealdbHome = () => {
 
 
                         <div className="grid grid-cols-1 sm:gird-cols-2 lg:grid-cols-4 gap-4 ">
+
                             {category.map((e) => (
-                                <div key={e.id}>
-                                    <div className="bg-blue-100 ease-in duration-300 rounded-t-lg hover:bg-opacity-45 shadow-2xl ">
-                                        <img 
-                                        src={e.categoryThumb} alt="" 
-                                        className="p-8" />
+                                <Link to={`/mealdb/${e.category}`} key={e.id}>
+                                    <div key={e.id}>
+                                        <div className="bg-blue-100 ease-in duration-300 rounded-t-lg hover:bg-opacity-45 shadow-2xl ">
+                                            <img
+                                                src={e.categoryThumb} alt=""
+                                                className="p-8" />
+                                        </div>
+                                        <p className="text-2 p-1 w-full bg-blue-300 shadow-2xl rounded-b-lg text-left pl-3 font-sans text-white">{e.category}</p>
                                     </div>
-                                    <p className="text-2 p-1 w-full bg-blue-300 shadow-2xl rounded-b-lg text-left pl-3 font-sans text-white">{e.category}</p>
-                                </div>
+                                </Link>
 
                             ))}
                         </div>
-
-
-
-
-
-
-
                     </div>
                 )
             }
