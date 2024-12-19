@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { FaSearchDollar } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { BrowserRouter as Router, Routes, Route, Link, Outlet, useParams } from "react-router-dom";
-import { AllDist, StateWiseDistrictData } from './Data/District.js'
+import { AllDist, StateWiseDistrictData, AllStates, AllCities } from './Data/District.js'
+
 const Search_Menu = ({ search, Setsearch }) => {
 
     // Dropdown State Management
@@ -12,29 +13,57 @@ const Search_Menu = ({ search, Setsearch }) => {
     const [searchSuggestions, SetsearchSuggestions] = useState([])
 
     // Sate sets Value of Search Box
-    const [searchValue, setSearchValue] = useState("")
+    const [searchValue, setSearchValue] = useState('')
 
+    // sets navigation link based on dropdown menu
+    const [paramlink, Setparamlink] = useState('')
 
 
     // Fires each time when Search INput Changes 
     const handleInputChange = (e) => {
         console.log(e.target.value)
         DynamicSearch(e.target.value)
-        if(e.target.value==''){
+        if (e.target.value == '') {
             console.log('empty')
             SetsearchSuggestions([])
         }
     }
 
     // Function to Filters based on search input
+
     const DynamicSearch = (value) => {
-        let input = `${value}`.toUpperCase()
-        SetsearchSuggestions((AllDist.filter((element) => {
-            return (element.startsWith(input))
-        })))
-        console.log(searchSuggestions)
+        let input = `${value}`.toUpperCase();
+
+        // Filter based on the selected dropdown option
+        if (Dropdown === 'State') {
+            SetsearchSuggestions(AllStates.filter((element) => element.toUpperCase().startsWith(input)));
+        } else if (Dropdown === 'District') {
+            SetsearchSuggestions(AllDist.filter((element) => element.toUpperCase().startsWith(input)));
+        } else if (Dropdown === 'City') {
+            SetsearchSuggestions(AllCities.filter((element) => element.toUpperCase().startsWith(input)));
+        } else {
+            SetsearchSuggestions([]);
+        }
+        console.log(searchSuggestions);
+
     }
 
+
+
+    // Search Button Logic for routing
+    const SearchButton = () => {
+
+        if (Dropdown === 'District') {
+            Setparamlink(`/bankdb/search/district/${searchValue}`)
+        } else if (Dropdown === 'City') {
+            Setparamlink(`/bankdb/search/city/${searchValue}`)
+        } else if (Dropdown === 'State') {
+            Setparamlink(`/bankdb/search/State/${searchValue}`)
+        } else if (Dropdown === 'IFSC') {
+            Setparamlink(`/bankdb/IFSC/${searchValue}`)
+        }
+
+    }
 
 
     if (!search) return null
@@ -76,28 +105,36 @@ const Search_Menu = ({ search, Setsearch }) => {
                         value={searchValue}
                     />
 
-                    <button
-                        // onClick={() => Setsearch(false)}
-                        onClick={() => SearchData()}
-                        className=" bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                    >
-                        <FaSearchDollar />
-                    </button>
+                    <Link to={paramlink}>
+                        <button
+                            // onClick={() => Setsearch(false)}
+                            onClick={() => {
+                                SearchButton()
+                                Setsearch(false)
+                            }
+
+                            }
+                            className=" bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                        >
+                            <FaSearchDollar />
+                        </button>
+                    </Link>
+
 
 
                     <div className="absolute top-24 text-center w-fit max-h-[500px] overflow-y-scroll scrollbar-hidden">
-                    {
-                        searchSuggestions.map((data, index) => (
-                            <h1
-                                key={index}
-                                onClick={(e) => setSearchValue(e.target.innerText)}
-                                className="p-2 bg-gray-100 border-b border-gray-200 text-gray-800 cursor-pointer hover:bg-blue-100 rounded w-[45rem]"
-                            >
-                                {data}
-                            </h1>
-                        ))
-                    }
-                </div>
+                        {
+                            searchSuggestions.map((data, index) => (
+                                <h1
+                                    key={index}
+                                    onClick={(e) => setSearchValue(e.target.innerText)}
+                                    className="p-2 bg-gray-100 border-b border-gray-200 text-gray-800 cursor-pointer hover:bg-blue-100 rounded w-[45rem]"
+                                >
+                                    {data}
+                                </h1>
+                            ))
+                        }
+                    </div>
 
                 </div>
 

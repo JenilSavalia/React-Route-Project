@@ -38,17 +38,16 @@ function App() {
             <Route path='/bankdb' element={<BankLayout />}>
               <Route index element={<BankHome />} />
 
-              <Route path='IFSC/' element={<IFSC />} >
+              <Route path='IFSC' element={<IFSC />} >
                 <Route path=':code' element={<IFSC_Detail />} />
               </Route>
 
 
               <Route path='search'>
-                <Route path=':State' element={<State />} />
-                <Route path=':State/:District' element={<District />} />
-                <Route path=':/:District/:City' element={<City />} />
-                <Route path=':State/:District/:City/:Branchlist' element={<Branchlist />} />
-                <Route path=':State/:District/:City/:Branchlist/:json' element={<BankDetail />} />
+                <Route path='district'>
+                  <Route path=':dist' element={<District />} />
+                </Route>
+
               </Route>
 
             </Route>

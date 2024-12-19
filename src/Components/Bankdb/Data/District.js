@@ -37752,15 +37752,17 @@ export const AllDist = [
     "ZIRA"
 ]
 
+export const AllStates = ["ANDAMAN AND NICOBAR ISLAND", "ANDHRA PRADESH", "ARUNACHAL PRADESH", "ASSAM", "BIHAR", "CHANDIGARH", "CHHATTISGARH", "DADRA AND NAGAR HAVELI", "DAMAN AND DIU", "DELHI", "GOA", "GUJARAT", "GUJRAT", "HARYANA", "HIMACHAL PRADESH", "JAMMU AND KASHMIR", "JHARKHAND", "KARNATAKA", "KERALA", "LAKSHADWEEP", "MADHYA PRADESH", "MAHARASHTRA", "MANIPUR", "MEGHALAYA", "MIZORAM", "NAGALAND", "NARSINGHPUR", "NEW DELHI", "ODISHA", "PONDICHERRY", "PUNJAB", "RAJASTHAN", "SIKKIM", "TAMILNADU", "TELANGANA", "TRIPURA", "UTTAR PRADESH", "UTTARAKHAND", "WEST BENGAL"]
+
+export const AllCities = ['A','B','C']
 
 
 
-const DynamicState = 'JHUNJUNU';
-const DynamicStateFinder = (DynamicState) => {
-    for (let key in DistrictData) {
-        if (DistrictData.hasOwnProperty(key)) {
-            for (const ele of DistrictData[key]) {
-                if (ele == ChosenDist) {
+const DynamicStateFinder = () => {
+    for (let key in StateWiseDistrictData) {
+        if (StateWiseDistrictData.hasOwnProperty(key)) {
+            for (const ele of StateWiseDistrictData[key]) {
+                if (ele == 'JHUNJUNU') {
                     console.log(key);
                     break;
                 }
