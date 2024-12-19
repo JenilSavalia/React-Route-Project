@@ -15,6 +15,7 @@ import BankDetail from './Components/Bankdb/BankDetail';
 import BankLayout from './Components/Bankdb/BankLayout';
 import BankHome from './Components/Bankdb/BankHome';
 import IFSC from './Components/Bankdb/IFSC';
+import IFSC_Detail from './Components/Bankdb/IFSC_Detail';
 
 function App() {
 
@@ -37,7 +38,9 @@ function App() {
             <Route path='/bankdb' element={<BankLayout />}>
               <Route index element={<BankHome />} />
 
-              <Route path='IFSC/:code' element={<IFSC />} />
+              <Route path='IFSC/' element={<IFSC />} >
+                <Route path=':code' element={<IFSC_Detail />} />
+              </Route>
 
 
               <Route path='search'>

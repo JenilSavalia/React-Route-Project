@@ -1,24 +1,39 @@
 import { BrowserRouter as Router, Routes, Route, Link, Outlet, useParams } from "react-router-dom";
 import React, { useState } from "react";
 import { FaCircleUser } from "react-icons/fa6";
+import Search_Menu from "./Search_Menu";
 
 function BankLayout() {
+
+    // Search Box Poppup
+    const [search, Setsearch] = useState(false)
+
+    const handleSearch = () => {
+        Setsearch(true)
+    }
+
 
     return (
 
         <>
+            <div className="fixed z-50">
+                <Search_Menu search={search} Setsearch={Setsearch} />
+            </div>
 
             <div className="flex-col items-center">
                 <div className="bg-blue-50 flex justify-between items-center px-2 py-4 sm:px-6 xl:px-[8rem] ">
+                    <Link to='/bankdb'>
                     <h1 className='text-l font-bold text-blue-700 sm:text-xl xl:text-2xl'>
                         <span className="bg-blue-200 rounded-full text-md mr-2 ">🏦</span>
                         BankDd</h1>
+                    </Link>
 
 
                     <div className="hidden sm:block w-[50%] lg:w-[40%]">
                         <input type="text"
                             placeholder="Enter IFSC State City District"
-                            className="bg-gray-100 p-3 border-2 border-blue-100 rounded text-xs w-full"
+                            className="bg-gray-100 p-3 border-2 border-blue-100 rounded text-xs w-full focus:outline-none focus:ring focus:ring-violet-200"
+                            onClick={() => handleSearch()}
                         />
                     </div>
 
@@ -37,14 +52,16 @@ function BankLayout() {
                     <li className="bg-blue-200 rounded border border-dotted border-blue-400 px-2 hover:bg-blue-300 cursor-pointer">State</li>
                     <li className="bg-blue-200 rounded border border-dotted border-blue-400 px-2 hover:bg-blue-300 cursor-pointer">City</li>
                     <li className="bg-blue-200 rounded border border-dotted border-blue-400 px-2 hover:bg-blue-300 cursor-pointer">District</li>
-                    <li className="bg-blue-200 rounded border border-dotted border-blue-400 px-2 hover:bg-blue-300 cursor-pointer">IFSC</li>
+                    <Link to='IFSC'>
+                        <li className="bg-blue-200 rounded border border-dotted border-blue-400 px-2 hover:bg-blue-300 cursor-pointer">IFSC</li>
+                    </Link>
                 </div>
 
                 <input type="text"
                     placeholder="Enter IFSC State City District"
                     className="bg-gray-100 w-[80%] p-3 mt-2 rounded text-xs block mx-auto border-2 border-blue-100 rounded sm:hidden"
+                    onClick={() => handleSearch()}
                 />
-
 
             </div>
 
