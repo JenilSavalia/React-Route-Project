@@ -21,7 +21,7 @@ const State = () => {
   return (
 
     <div>
-      <h1>dtststds</h1>
+      {/* <h1>dtststds</h1> */}
       <input type="text"
         placeholder="Search State"
         className="bg-gray-100 w-[40%] p-3 mt-2 rounded text-xs block mx-auto border-2 border-blue-100 focus:outline-none focus:ring focus:ring-violet-200"
