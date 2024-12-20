@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Points editor for HTML5 map</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <script src="../raphael.min.js" type="text/javascript"></script>
+    <script src="../map.js" type="text/javascript"></script>
+    <script src="../settings.js" type="text/javascript"></script>
+    <script src="../paths.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js" type="text/javascript"></script>
+    <script src="http://cdn.html5maps.com/3d_party/farbtastic/1.3u/farbtastic.min.js" type="text/javascript"></script>
+    <link href="../map.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.html5maps.com/3d_party/farbtastic/1.3u/farbtastic.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        a:link { color:#06c;  text-decoration:underline; }
+        a:visited { color:#06c; text-decoration:underline; }
+        a:active { color:#06c; text-decoration:underline; }
+        a:hover { color:#147; text-decoration:underline; }
+        body { background-color: #c2c2c2; margin: 20px 30px; font-family: arial, Trebuchet MS, sans-serif; }
+        #wrapp { background-color: #f4f4f4; padding: 10px; }
+        #wrapp > div { background-color: white; margin-top: 10px; padding: 5px; }
+        #header { padding: 10px; margin-top: 0 !important; }
+        #container { float: left; width: 60%; }
+        #tools { float: left; width: 40%; }
+        .fm-scale { bottom: 0; }
+        .fm-scale a:hover { text-decoration: none; }
+        .f2 { float: left; width: 50%; }
+        .f3 { float: left; width: 33%; }
+        .c { clear: both; }
+        label { display: inline-block; margin: 4px 2px; }
+        span.title { display: inline-block; width: 160px; }
+        fieldset input, fieldset select { width: 200px; }
+        fieldset input[type=checkbox] {width: auto; }
+        .colorpicker { margin-left: -50px; margin-top: -120px; position: absolute; z-index: 10; }
+    </style>
+</head>
+<body>
+    <div id="wrapp">
+        <div id="header">
+            <h2><a href="http://www.fla-shop.com">FLA-SHOP.com - Interactive Maps with Greater Impact!</a></h2>
+        </div>
+        <div id="instructions">
+            <p>Use this page - as a point editor for your map.</p>
+            <p>
+                <ol>
+            <li>Be sure that this page uses right <b>settings.js</b> file. (Your settings.js must provide standard <i>map_cfg</i> variable)</li>
+            <li>Double click on map to add new point. You can add as many points as you want.</li>
+            <li>Select a point you want to edit by simply clicking on it.</li>
+            <li>Edit point properties via editor.</li>
+            <li>Generate new <b>settings.js</b> content by clicking <b>"export config"</b> button.</li>
+            <li>Copy generated content from field and paste into your <b>settings.js</b> file.</li>
+        </ol>
+            </p>
+        </div>
+        <div>
+        <div id="container"></div>
+        <div id="tools">
+            <form action="">
+            <fieldset>
+                <div class="f3">id: <span id="pointID"></span></div>
+                <div class="f3">x: <span id="pointX"></span></div>
+                <div class="f3">y: <span id="pointY"></span></div><br/>
+                <label><span class="title">Radius: </span><input type="number" name="pointRadius" id="pointRadius" min="1" max="15" value=""/></label>
+            </fieldset>
+            <fieldset>
+                <legend>Texts</legend>
+                <label><span class="title">Name: </span><input type="text" name="pointName" id="pointName" value=""/></label>
+                <label><span class="title">Short name: </span><input type="text" name="pointShortname" id="pointShortname" value="" /></label>
+
+                <label><span class="title">Text position: </span><select name="pointTextPos" id="pointTextPos">
+                    <option value="left-top">Left Top</option>
+                    <option value="left-middle">Left Middle</option>
+                    <option value="left-bottom">Left Bottom</option>
+                    <option value="middle-top">Center Top</option>
+                    <option value="middle-middle">Center Middle</option>
+                    <option value="middle-bottom">Center Bottom</option>
+                    <option value="right-top">Right Top</option>
+                    <option value="right-middle">Right Middle</option>
+                    <option value="right-bottom">Right Bottom</option>
+                </select></label>
+                <label><span class="title">Font size: </span><input type="number" name="pointFS" id="pointFS" min="3" max="20"s/> px</label>
+                <br/>
+                <label for="pointComment">Popup comment: </label>
+                <textarea rows="6" cols="10" style="width: 100%" id="pointComment"></textarea>
+            </fieldset>
+            <fieldset>
+                <legend>Point colors</legend>
+                <label><span class="title">Common color: </span><input class="color colorSimple" type="text" name="pointColor" id="pointColor" value="" style="background-color: white"  /><div class="colorpicker"></div></label>
+                <label><span class="title">Hover color: </span><input class="color colorOver" type="text" name="pointColorOver" id="pointColorOver" value="" style="background-color: white"  /><div class="colorpicker"></div></label>
+            </fieldset>
+            <fieldset>
+                <legend>Short name colors</legend>
+                <label><span class="title">Common color: </span><input class="color colorSimple" type="text" name="pointNameColor" id="pointNameColor" value="" style="background-color: white"  /><div class="colorpicker"></div></label>
+                <label><span class="title">Hover color: </span><input class="color colorOver" type="text" name="pointNameColorOver" id="pointNameColorOver" value="" style="background-color: white"  /><div class="colorpicker"></div></label>
+            </fieldset>
+            <fieldset>
+                <legend>Link</legend>
+                <label><span class="title">URL: </span><input type="text" name="pointLink" id="pointLink"  /></label>
+                <label><span class="title">Open in new window: </span><input type="checkbox" name="pointLinkNW" id="pointLinkNW"  /></label>
+            </fieldset>
+            <fieldset style="border: none;">
+                <input type="button" value="delete point" onclick="deletePoint()" style="float: right">
+            </fieldset>
+            <hr>
+            </form>
+
+            <fieldset style="border: none">
+                <textarea rows="5" cols="10" style="width: 100%" id="exportResult"></textarea>
+                <button type="button" onclick="clearSelection(); $('#exportResult').val(exportConfig());"  style="float: right; margin-top: 5px">Export config</button>
+            </fieldset>
+        </div>
+        <div class="c"></div>
+        </div>
+        <div id="footer">
+            Thank you for using our product.  Please feel free to contact us with any questions regarding our product.
+            <br>
+            <br>
+            <a href="http://www.fla-shop.com">More maps and Information on website Fla-shop.com</a>
+        </div>
+    </div>
+<script type="text/javascript">
+    var toOverride = {
+        mapWidth: 0,
+        shadowAllow: false,
+        zoomEnable: false,
+        ignoreLinks: true
+    };
+    var toStore = {};
+    for (var p in toOverride) if (toOverride.hasOwnProperty(p)) {
+        toStore[p] = map_cfg[p];
+        map_cfg[p] = toOverride[p];
+    }
+    if ( ! map_cfg.points)
+        map_cfg.points = {};
+    var map = new FlaMap(map_cfg);
+    var pX = $('#pointX');
+    var pY = $('#pointY');
+    var pID = $('#pointID');
+    var pN = $('#pointName');
+    var pSN = $('#pointShortname');
+    var pC  = $('#pointColor');
+    var pCO = $('#pointColorOver');
+    var pNC  = $('#pointNameColor');
+    var pNCO = $('#pointNameColorOver');
+    var pR   = $('#pointRadius');
+    var pTP  = $('#pointTextPos');
+    var pCmt = $('#pointComment');
+    var pFS  = $('#pointFS');
+    var pU = $('#pointLink');
+    var pUNW = $('#pointLinkNW');
+
+    var slctd = null;
+    function clearSelection() {
+        $('form')[0].reset();
+        $('form input.color').css('backgroundColor', '');
+        pY.html('');
+        pX.html('');
+        pID.html('');
+        $('form input[type=button]').attr('disabled', 'disabled');
+        map.setPointAttr(slctd, {
+            'borderColor':null,
+            'borderColorOver': null
+        });
+        slctd = null;
+    }
+    function selectPoint(pid) {
+        pX.html(map.fetchPointAttr(pid, 'x'));
+        pY.html(map.fetchPointAttr(pid, 'y'));
+        pID.html(pid);
+        slctd = pid;
+        var pos = map.fetchPointAttr(pid, 'textPos');
+        pR.val(map.fetchPointAttr(pid, 'radius'));
+        pN.val(map.fetchPointAttr(pid, 'name'));
+        pSN.val(map.fetchPointAttr(pid, 'shortname'));
+        pCmt.val(map.fetchPointAttr(pid, 'comment'));
+        pTP.val(pos ? pos : 'right-middle');
+        pC.val(map.fetchPointAttr(pid, 'color')).css('backgroundColor', pC.val());
+        pCO.val(map.fetchPointAttr(pid, 'colorOver')).css('backgroundColor', pCO.val());
+        pNC.val(map.fetchPointAttr(pid, 'nameColor')).css('backgroundColor', pNC.val());
+        pNCO.val(map.fetchPointAttr(pid, 'nameColorOver')).css('backgroundColor', pNCO.val());
+        pFS.val(parseInt(map.fetchPointAttr(pid, 'nameFontSize')));
+        pU.val(map.fetchPointAttr(pid, 'link'));
+        pUNW.prop('checked', map.fetchPointAttr(pid, 'isNewWindow') ? 'checked' : false);
+        $('form input[type=button]').attr('disabled', false);
+    }
+
+    map.drawOnDomReady('container', function() {
+        map.on('dblclick', function(ev, sid, map){
+            var p = map.addPoint(ev.onMapX, ev.onMapY);
+            clearSelection();
+            selectPoint(p);
+        });
+        map.on('click', function(ev, sid, map){
+            if (slctd != sid) {
+                applyChanges();
+                clearSelection();
+                if (sid && map.mapConfig.points[sid]) {
+                    selectPoint(sid);
+                }
+            }
+        });
+        var lastX = 0, lastY = 0, is_moving = false;
+        map.on('mousedown', function(ev, sid, map) { if (sid && map.mapConfig.points[sid]) {
+            if (ev.which == 1) {
+                lastX = ev.onMapX;
+                lastY = ev.onMapY;
+                is_moving = sid;
+                ev.stopPropagation();
+            }
+        } });
+        map.on('mouseup', function(ev, sid, map) {
+            lastX = 0;
+            lastY = 0;
+            is_moving = false;
+        });
+        map.on('mousemove', function(ev, sid, map) {
+            if (is_moving) {
+                var dx = ev.onMapX - lastX,
+                    dy = ev.onMapY - lastY;
+                map.setPointAttr(is_moving, {
+                    x: map.fetchPointAttr(is_moving, 'x')+dx,
+                    y: map.fetchPointAttr(is_moving, 'y')+dy
+                });
+                lastX = ev.onMapX;
+                lastY = ev.onMapY;
+                if (is_moving === slctd) {
+                    pX.html(map.fetchPointAttr(is_moving, 'x'));
+                    pY.html(map.fetchPointAttr(is_moving, 'y'));
+                }
+                ev.stopPropagation();
+            }
+        });
+        clearSelection();
+        $('form fieldset input, form fieldset select, form fieldset textarea')
+                .on('change', applyChanges)
+                .on('blur', applyChanges);
+    });
+
+    function applyChanges() {
+        if (slctd) {
+            var cfg = {
+                name: pN.val(),
+                shortname: pSN.val(),
+                comment: pCmt.val(),
+                textPos: pTP.val(),
+                color: pC.val() ? pC.val() : null,
+                colorOver: pCO.val() ? pCO.val() : null,
+                nameColor: pNC.val() ? pNC.val() : null,
+                nameColorOver: pNCO.val() ? pNCO.val() : null,
+                link: pU.val() ? pU.val() : null,
+                isNewWindow: pU.val() ? (pUNW.prop('checked') ? true : false) : null
+            };
+            if (parseFloat(pR.val()))
+                cfg.radius = parseFloat(pR.val());
+            if (parseInt(pFS.val()))
+                cfg.nameFontSize = parseInt(pFS.val())+'px';
+            else
+                cfg.nameFontSize = null;
+            map.setPointAttr(slctd, cfg);
+        }
+    }
+
+    function deletePoint() {
+        if (slctd) {
+            var n = map.fetchPointAttr(slctd, 'name');
+            if ( ! confirm("Are you sure, that you want to delete point %s?".replace('%s', n ? n+' ('+slctd+')' : slctd)))
+                return;
+            map.deletePoint(slctd);
+            clearSelection();
+        }
+    }
+
+    function exportConfig() {
+        if ( ! JSON)
+            return 'This browser doesn\'t support JSON serialization API';
+        var r = {}, p = null;
+        for (p in map_cfg) if (map_cfg.hasOwnProperty(p)) {
+            r[p] = map.mapConfig[p];
+        }
+        for (p in toStore) if (toStore.hasOwnProperty(p)) {
+            r[p] = toStore[p];
+        }
+        return 'var map_cfg = '+JSON.stringify(r, null, 4);
+    }
+
+    $('.color~.colorpicker').each(function(){
+        var me = this;
+
+        $(this).farbtastic(function(color){
+            var textColor = this.hsl[2] > 0.5 ? '#000' : '#fff';
+
+            $(me).prev().css({
+                background: color,
+                color: textColor
+            }).val(color);
+
+        });
+
+        $.farbtastic(this).setColor($(this).prev().val());
+
+        $($(this).prev()[0]).bind('change', function(){
+            $.farbtastic(me).setColor(this.value);
+        });
+
+        $(this).hide();
+        $(this).prev().bind('focus', function(){
+            $(this).next().fadeIn();
+        });
+        $(this).prev().bind('blur', function(){
+            $(this).next().fadeOut();
+        });
+    });
+    setInterval(function() {
+        if (slctd) {
+            var c = map.fetchPointAttr(slctd, 'borderColor');
+            map.setPointAttr(slctd, {
+                'borderColor': c == 'red' ? null : 'red',
+                'borderColorOver': c == 'red' ? null : 'red'
+            });
+        }
+    }, 500)
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaSearchDollar } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { BrowserRouter as Router, Routes, Route, Link, Outlet, useParams } from "react-router-dom";
-import { AllDist, StateWiseDistrictData, AllStates,AllCity} from './Data/Data.js'
+import { AllDist, StateWiseDistrictData, AllStates, AllCity } from './Data/Data.js'
 
 const Search_Menu = ({ search, Setsearch }) => {
 
@@ -40,8 +40,6 @@ const Search_Menu = ({ search, Setsearch }) => {
             SetsearchSuggestions(AllStates.filter((element) => element.toUpperCase().startsWith(input)));
         } else if (Dropdown === 'District') {
             SetsearchSuggestions(AllDist.filter((element) => element.toUpperCase().startsWith(input)));
-        } else if (Dropdown === 'City') {
-            SetsearchSuggestions(AllCity.filter((element) => element.toUpperCase().startsWith(input)));
         } else {
             SetsearchSuggestions([]);
         }
@@ -55,13 +53,14 @@ const Search_Menu = ({ search, Setsearch }) => {
     const SearchButton = () => {
 
         if (Dropdown === 'District') {
-            Setparamlink(`/bankdb/search/district/${searchValue}`)
-        } else if (Dropdown === 'City') {
-            Setparamlink(`/bankdb/search/city/${searchValue}`)
-        } else if (Dropdown === 'State') {
-            Setparamlink(`/bankdb/search/State/${searchValue}`)
+            window.location.href = `http://localhost:5173/bankdb/search/district/${searchValue}`;
+            // Setparamlink(`/bankdb/search/district/${searchValue}`)
+        }  else if (Dropdown === 'State') {
+            window.location.href = `http://localhost:5173/bankdb/search/State/${searchValue}`;
+            // Setparamlink(`/bankdb/search/State/${searchValue}`)
         } else if (Dropdown === 'IFSC') {
-            Setparamlink(`/bankdb/IFSC/${searchValue}`)
+            window.location.href = `http://localhost:5173/bankdb/IFSC/${searchValue}`;
+            // Setparamlink(`/bankdb/IFSC/${searchValue}`)
         }
 
     }
@@ -91,8 +90,6 @@ const Search_Menu = ({ search, Setsearch }) => {
                         className='sm:px-3 sm:bg-blue-200   border rounded focus:outline-none focus:ring focus:ring-blue-50 font-bold text-blue-800'>
                         <option value="State">State</option>
                         <option value="District">District</option>
-                        <option value="City">City</option>
-
                         <option value="IFSC">IFSC</option>
                     </select>
                     <input
@@ -104,22 +101,25 @@ const Search_Menu = ({ search, Setsearch }) => {
                             setSearchValue(e.target.value)
                         }}
                         value={searchValue}
+                        autoFocus
                     />
 
-                    <Link to={paramlink}>
-                        <button
-                            // onClick={() => Setsearch(false)}
-                            onClick={() => {
-                                SearchButton()
-                                Setsearch(false)
-                            }
 
-                            }
-                            className=" bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                        >
-                            <FaSearchDollar />
-                        </button>
-                    </Link>
+                    <button
+                        // onClick={() => Setsearch(false)}
+                        onClick={() => {
+                            SearchButton()
+                            setInterval(() => {
+                                Setsearch(false)
+                            }, 1000)
+                        }
+
+                        }
+                        className=" bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    >
+                        <FaSearchDollar />
+                    </button>
+
 
 
 

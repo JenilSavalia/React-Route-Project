@@ -9,13 +9,13 @@ import Home from './Components/Home'
 import CategoryPage from './Components/Mealbd/CategoryPage';
 import State from './Components/Bankdb/State';
 import District from './Components/Bankdb/District';
-import City from './Components/Bankdb/City';
-import Branchlist from './Components/Bankdb/Branchlist';
 import BankDetail from './Components/Bankdb/BankDetail';
 import BankLayout from './Components/Bankdb/BankLayout';
 import BankHome from './Components/Bankdb/BankHome';
 import IFSC from './Components/Bankdb/IFSC';
 import IFSC_Detail from './Components/Bankdb/IFSC_Detail';
+import DistList from './Components/Bankdb/DistList';
+import AllDistList from './Components/Bankdb/AllDistList';
 
 function App() {
 
@@ -38,6 +38,16 @@ function App() {
             <Route path='/bankdb' element={<BankLayout />}>
               <Route index element={<BankHome />} />
 
+
+
+              <Route path='district'  >
+                <Route index element={<AllDistList />} />
+                <Route path=':dst' element={<DistList />} />
+
+              </Route>
+
+
+
               <Route path='IFSC'  >
                 <Route index element={<IFSC />} />
                 <Route path=':IFSCcode' element={<IFSC_Detail />} />
@@ -48,11 +58,10 @@ function App() {
                 <Route path='district'>
                   <Route path=':dist' element={<District />} />
                 </Route>
-                <Route path='city'>
-                  <Route path=':city' element={<City />} />
-                </Route>
-
+                <Route path='state' element={<State />} />
               </Route>
+
+
 
             </Route>
 

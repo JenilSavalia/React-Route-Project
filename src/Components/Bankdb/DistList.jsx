@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { AllStates } from './Data/Data.js'
-import { Link, Links } from "react-router-dom";
+import { StateWiseDistrictData } from './Data/Data.js'
+import { Link, Links,useParams } from "react-router-dom";
 
-const State = () => {
+const DistList = () => {
+
+  const { dst } = useParams();
 
   const [searchValue, SetsearchValue] = useState('')
 
-  const [stateData, SetstateData] = useState(AllStates)
+  const [stateData, SetstateData] = useState(StateWiseDistrictData[dst])
 
 
   const DynamicSearch = (value) => {
     if (value === '') {
-      SetstateData(AllStates)
+      SetstateData(StateWiseDistrictData[dst])
     }
     console.log(value)
     let input = `${value}`.toUpperCase();
-    SetstateData(AllStates.filter((element) => element.startsWith(input)))
+    SetstateData(StateWiseDistrictData[dst].filter((element) => element.startsWith(input)))
   }
 
   return (
@@ -23,7 +25,7 @@ const State = () => {
     <div>
       <h1>dtststds</h1>
       <input type="text"
-        placeholder="Search State"
+        placeholder={`Search District in ${dst}`}
         className="bg-gray-100 w-[40%] p-3 mt-2 rounded text-xs block mx-auto border-2 border-blue-100 focus:outline-none focus:ring focus:ring-violet-200"
         value={searchValue}
         onChange={(e) => {
@@ -37,10 +39,10 @@ const State = () => {
 
         {
           stateData.map((data) => (
-            <Link to={`/bankdb/district/${data}`}>
-              <div 
-              onClick={(e)=> SetsearchValue(e.target.innerText)}
-              key={data} className="max-sm:text-sm w-fit bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 my-2 cursor-pointer">{data}</div>
+            <Link to={`/bankdb/search/district/${data}`}>
+              <div
+                onClick={(e) => SetsearchValue(e.target.innerText)}
+                key={data} className="max-sm:text-sm w-fit bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 my-2 cursor-pointer">{data}</div>
             </Link>
           ))
         }
@@ -50,6 +52,7 @@ const State = () => {
 
   )
 
-};
 
-export default State;
+}
+
+export default DistList

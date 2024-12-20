@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { AllStates } from './Data/Data.js'
-import { Link, Links } from "react-router-dom";
+import { AllDist } from './Data/Data.js'
+import { Link, Links,useParams } from "react-router-dom";
 
-const State = () => {
+const AllDistList = () => {
+
 
   const [searchValue, SetsearchValue] = useState('')
 
-  const [stateData, SetstateData] = useState(AllStates)
+  const [stateData, SetstateData] = useState(AllDist)
 
 
   const DynamicSearch = (value) => {
     if (value === '') {
-      SetstateData(AllStates)
+      SetstateData(AllDist)
     }
     console.log(value)
     let input = `${value}`.toUpperCase();
-    SetstateData(AllStates.filter((element) => element.startsWith(input)))
+    SetstateData(AllDist.filter((element) => element.startsWith(input)))
   }
 
   return (
@@ -23,7 +24,7 @@ const State = () => {
     <div>
       <h1>dtststds</h1>
       <input type="text"
-        placeholder="Search State"
+        placeholder={`Search District In INDIA`}
         className="bg-gray-100 w-[40%] p-3 mt-2 rounded text-xs block mx-auto border-2 border-blue-100 focus:outline-none focus:ring focus:ring-violet-200"
         value={searchValue}
         onChange={(e) => {
@@ -37,10 +38,10 @@ const State = () => {
 
         {
           stateData.map((data) => (
-            <Link to={`/bankdb/district/${data}`}>
-              <div 
-              onClick={(e)=> SetsearchValue(e.target.innerText)}
-              key={data} className="max-sm:text-sm w-fit bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 my-2 cursor-pointer">{data}</div>
+            <Link to={`/bankdb/search/district/${data}`}>
+              <div
+                onClick={(e) => SetsearchValue(e.target.innerText)}
+                key={data} className="max-sm:text-sm w-fit bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 my-2 cursor-pointer">{data}</div>
             </Link>
           ))
         }
@@ -50,6 +51,7 @@ const State = () => {
 
   )
 
-};
 
-export default State;
+}
+
+export default AllDistList;

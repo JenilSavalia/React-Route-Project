@@ -19,7 +19,8 @@ const IFSC_Detail = () => {
 
 
     return (
-        <div className="flex justify-center items-center p-4">
+
+        IFSCdata ? (<div className="flex justify-center items-center p-4" >
             <div className="overflow-x-auto w-full max-w-4xl border border-gray-300 rounded-lg shadow-md">
                 <table className="table-auto w-full border-collapse bg-white text-left max-sm:text-xs text-sm">
                     <thead>
@@ -38,7 +39,10 @@ const IFSC_Detail = () => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >) : <h1> Enter Valid IFSC</h1>
+
+
+
     );
 };
 
