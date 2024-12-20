@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { FaSearchDollar } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { BrowserRouter as Router, Routes, Route, Link, Outlet, useParams } from "react-router-dom";
-import { AllDist, StateWiseDistrictData, AllStates, AllCities } from './Data/District.js'
+import { AllDist, StateWiseDistrictData, AllStates,AllCity} from './Data/Data.js'
 
 const Search_Menu = ({ search, Setsearch }) => {
+
 
     // Dropdown State Management
     const [Dropdown, SetDropdown] = useState('District')
@@ -40,7 +41,7 @@ const Search_Menu = ({ search, Setsearch }) => {
         } else if (Dropdown === 'District') {
             SetsearchSuggestions(AllDist.filter((element) => element.toUpperCase().startsWith(input)));
         } else if (Dropdown === 'City') {
-            SetsearchSuggestions(AllCities.filter((element) => element.toUpperCase().startsWith(input)));
+            SetsearchSuggestions(AllCity.filter((element) => element.toUpperCase().startsWith(input)));
         } else {
             SetsearchSuggestions([]);
         }
