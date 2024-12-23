@@ -2,7 +2,7 @@ import React from "react";
 
 const HorizontalScrollableTable = ({ data }) => {
   if (!data || data.length === 0) {
-    return <div className="p-4 text-gray-600">No data available to display.</div>;
+    return <div className="p-4 text-gray-600">Hold Your Seat.... Data is getting Fetched : Bankbd 🏦</div>;
   }
 
   return (
