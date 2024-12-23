@@ -50,16 +50,16 @@ const Search_Menu = ({ search, Setsearch }) => {
 
 
     // Search Button Logic for routing
-    const SearchButton = () => {
+https://bankbd.onrender.com/bankdb
 
         if (Dropdown === 'District') {
-            window.location.href = `http://localhost:5173/bankdb/search/district/${searchValue}`;
+            window.location.href = `https://bankbd.onrender.com/bankdb/search/district/${searchValue}`;
             // Setparamlink(`/bankdb/search/district/${searchValue}`)
         }  else if (Dropdown === 'State') {
-            window.location.href = `http://localhost:5173/bankdb/search/State/${searchValue}`;
+            window.location.href = `https://bankbd.onrender.com/bankdb/search/State/${searchValue}`;
             // Setparamlink(`/bankdb/search/State/${searchValue}`)
         } else if (Dropdown === 'IFSC') {
-            window.location.href = `http://localhost:5173/bankdb/IFSC/${searchValue}`;
+            window.location.href = `https://bankbd.onrender.com/bankdb/IFSC/${searchValue}`;
             // Setparamlink(`/bankdb/IFSC/${searchValue}`)
         }
 
