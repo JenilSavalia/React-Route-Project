@@ -50,7 +50,8 @@ const Search_Menu = ({ search, Setsearch }) => {
 
 
     // Search Button Logic for routing
-https://bankbd.onrender.com/bankdb
+
+    const SearchButton = () => {
 
         if (Dropdown === 'District') {
             window.location.href = `https://bankbd.onrender.com/bankdb/search/district/${searchValue}`;
